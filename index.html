@@ -21,7 +21,7 @@
      
    <main class="wrapper">
  
-    <h2 class="subheader">An HTML/CSS/JS example by NAME HERE</h2>
+    <h2 class="subheader">An HTML/CSS/JS example by Nakyoung Lee</h2>
     <div id="output">
       <p>The following is a demonstration of a form that can be filled out and when data is entered, the data can be seen on the page.</p>
       <p>Any form fields that have names with an underscore between significant words, such as <b>First_Name</b> 
@@ -30,6 +30,34 @@
       <div>
         <label for="FirstName">First Name</label><br>
         <input type="text" name="First_Name" id="FirstName" placeholder="First Name" required autofocus>
+      </div>
+      <div>
+        <label for="LastName">Last Name</label><br>
+        <input type="text" name="Last_Name" id="LastName" placeholder="Last Name" required>
+      </div>
+      <div>
+        <label for="Email">Email</label><br>
+        <input type="text" name="Email" id="Email" placeholder="Email" required>
+      </div>
+      <div>
+        <label for="Address">Address</label><br>
+        <input type="text" name="Address" id="Address" placeholder="Address" required>
+      </div>
+      <div>
+        <label for="City">City</label><br>
+        <input type="text" name="City" id="City" placeholder="City" required>
+      </div>
+      <div>
+        <label for="State">State</label><br>
+        <input type="text" name="State" id="State" placeholder="State" required>
+      </div>
+      <div>
+        <label for="PostalCode">PostalCode</label><br>
+        <input type="text" name="Postal_Code" id="PostalCode" placeholder="Postal Code" required>
+      </div>
+      <div>
+        <label for="Note">Note</label><br>
+        <textarea name="Note" id="Note"></textarea>
       </div>
       <div>
         <input type="submit">
@@ -46,6 +74,11 @@
   </main>
   <script src="js/main.js"></script> 
   <script>
+    function titleCase(str) {
+      return str.toLowerCase().split(' ').map(function(word) {
+        return word.replace(word[0], word[0].toUpperCase());
+      }).join(' ');
+    }
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -56,7 +89,17 @@
       urlParams.forEach(function(value,key){
 
         key = key.split("_").join(" ");
-        myOutput += `<p>${key}: ${value}</p>`;
+
+        const shouldUseTitleCase = key === "First Name"
+          || key === "Last Name"
+          || key === "Address"
+          || key === "City";
+
+        if (shouldUseTitleCase) {
+          value = titleCase(value);
+        }
+
+        myOutput += `<p>${key}: ${value}</p>`;    
       });
       myOutput += `<p><a href="index.html">CLEAR</a></p>`; 
       myOutput += `</div>`;
